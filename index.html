@@ -4841,84 +4841,84 @@
         }
 
     </style>
-    <!--<script type="text/javascript">-->
-        <!--$(function () {-->
-            <!--if (wx) {-->
-                <!--wx.config({-->
-                    <!--"debug": false,-->
-                    <!--"appId": "wxcd9e3ed21fed4eac",-->
-                    <!--"timestamp": "1535264731",-->
-                    <!--"nonceStr": "6lmxyu9y6j8",-->
-                    <!--"signature": "6ed2ab214d828856644a76dbdb50ae4db618e84b",-->
-                    <!--"jsApiList": ["onMenuShareTimeline", "onMenuShareAppMessage"]-->
-                <!--});-->
-                <!--wx.ready(function () {-->
-                    <!--console.log(`wx.ready called.`)-->
-                    <!--//find img in content-->
+    <script type="text/javascript">
+        $(function () {
+            if (wx) {
+                wx.config({
+                    "debug": false,
+                    "appId": "wxcd9e3ed21fed4eac",
+                    "timestamp": "1535264731",
+                    "nonceStr": "6lmxyu9y6j8",
+                    "signature": "6ed2ab214d828856644a76dbdb50ae4db618e84b",
+                    "jsApiList": ["onMenuShareTimeline", "onMenuShareAppMessage"]
+                });
+                wx.ready(function () {
+                    console.log(`wx.ready called.`)
+                    //find img in content
 
-                    <!--console.log($('#js_content img').attr('src'))-->
-                    <!--const imgUrl = $('#js_content img').attr('src')-->
-                    <!--const title = $('head > title').text()-->
-                    <!--const contentDesc = $('#js_content p').text().substr(0, 100)-->
-                    <!--wx.onMenuShareAppMessage({-->
-                        <!--title: title, // 分享标题-->
-                        <!--desc: contentDesc, // 分享描述-->
-                        <!--link: 'http://106.14.53.22/dynamicLinks/5b7b7f44e1fd6c566ba9bdf1', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致-->
-                        <!--imgUrl: imgUrl, // 分享图标-->
-                        <!--type: 'link', // 分享类型,music、video或link，不填默认为link-->
-                        <!--dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空-->
-                        <!--success: function () {-->
-                            <!--alert('分享成功')-->
-                        <!--}-->
-                    <!--});-->
-                <!--});-->
+                    console.log($('#js_content img').attr('src'))
+                    const imgUrl = $('#js_content img').attr('src')
+                    const title = $('head > title').text()
+                    const contentDesc = $('#js_content p').text().substr(0, 100)
+                    wx.onMenuShareAppMessage({
+                        title: title, // 分享标题
+                        desc: contentDesc, // 分享描述
+                        link: '', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                        imgUrl: imgUrl, // 分享图标
+                        type: 'link', // 分享类型,music、video或link，不填默认为link
+                        dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                        success: function () {
+                            alert('分享成功')
+                        }
+                    });
+                });
 
-            <!--}-->
-            <!--console.log('jquery ready.')-->
-            <!--var linkID = '5b7b7f44e1fd6c566ba9bdf1';-->
-            <!--var thumbCount = '0'-->
-            <!--const liked = localStorage.getItem(`liked-${linkID}`)-->
-            <!--if (liked) {-->
-                <!--$('#thumbCount').addClass('lightBlue').html(thumbCount);-->
-                <!--$('#likeIcon').removeClass('icon-like1').addClass('icon-like')-->
-            <!--} else {-->
-                <!--$('#thumbCount').removeClass('lightBlue').html(thumbCount);-->
-                <!--$('#likeIcon').removeClass('icon-like').addClass('icon-like1')-->
-            <!--}-->
-        <!--})-->
+            }
+            console.log('jquery ready.')
+            var linkID = '5b7b7f44e1fd6c566ba9bdf1';
+            var thumbCount = '0'
+            const liked = localStorage.getItem(`liked-${linkID}`)
+            if (liked) {
+                $('#thumbCount').addClass('lightBlue').html(thumbCount);
+                $('#likeIcon').removeClass('icon-like1').addClass('icon-like')
+            } else {
+                $('#thumbCount').removeClass('lightBlue').html(thumbCount);
+                $('#likeIcon').removeClass('icon-like').addClass('icon-like1')
+            }
+        })
 
-        <!--function addlikenum() {-->
-            <!--var linkID = '5b7b7f44e1fd6c566ba9bdf1';-->
-            <!--var url = '/dynamicLinks/addThumb/' + linkID;-->
-            <!--const liked = localStorage.getItem(`liked-${linkID}`)-->
-            <!--const newLiked = !liked-->
-            <!--const data = {add: newLiked}-->
-            <!--$.ajax({-->
-                <!--url: url,-->
-                <!--data: JSON.stringify(data),-->
-                <!--dataType: 'json',-->
-                <!--type: 'POST',-->
-                <!--contentType: 'application/json; charset=utf-8',-->
-                <!--async: false,-->
-                <!--success: function (data) {-->
-                    <!--if (newLiked) {-->
-                        <!--$('#thumbCount').addClass('lightBlue').html(data.thumbCount);-->
-                        <!--localStorage.setItem(`liked-${linkID}`, '1')-->
-                        <!--$('#likeIcon').removeClass('icon-like1').addClass('icon-like')-->
-                    <!--} else {-->
-                        <!--$('#thumbCount').removeClass('lightBlue').html(data.thumbCount);-->
-                        <!--localStorage.removeItem(`liked-${linkID}`)-->
-                        <!--$('#likeIcon').removeClass('icon-like').addClass('icon-like1')-->
-                    <!--}-->
-                <!--}-->
-            <!--});-->
-        <!--}-->
+        function addlikenum() {
+            var linkID = '5b7b7f44e1fd6c566ba9bdf1';
+            var url = '/dynamicLinks/addThumb/' + linkID;
+            const liked = localStorage.getItem(`liked-${linkID}`)
+            const newLiked = !liked
+            const data = {add: newLiked}
+            $.ajax({
+                url: url,
+                data: JSON.stringify(data),
+                dataType: 'json',
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                async: false,
+                success: function (data) {
+                    if (newLiked) {
+                        $('#thumbCount').addClass('lightBlue').html(data.thumbCount);
+                        localStorage.setItem(`liked-${linkID}`, '1')
+                        $('#likeIcon').removeClass('icon-like1').addClass('icon-like')
+                    } else {
+                        $('#thumbCount').removeClass('lightBlue').html(data.thumbCount);
+                        localStorage.removeItem(`liked-${linkID}`)
+                        $('#likeIcon').removeClass('icon-like').addClass('icon-like1')
+                    }
+                }
+            });
+        }
 
-        <!--function tousu() {-->
-            <!--var linkID = '5b7b7f44e1fd6c566ba9bdf1';-->
-            <!--window.location.href = `/dynamicLinkstousu/${linkID}`-->
-        <!--}-->
-    <!--</script>-->
+        function tousu() {
+            var linkID = '5b7b7f44e1fd6c566ba9bdf1';
+            window.location.href = `/dynamicLinkstousu/${linkID}`
+        }
+    </script>
 </head>
 <body id="activity-detail" class="zh_CN mm_appmsg rich_media_empty_extra not_in_mm">
 <div style="width: 0;height: 0;overflow: hidden"><img src="1.jpg" alt=""></div>
