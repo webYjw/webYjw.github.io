@@ -152,31 +152,75 @@
 </div>
 <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script>
-    wx.config({
-        debug: true,
-        appId: 'wxfb95e4025a5d4614',
-        timestamp: '1498633007',
-        nonceStr: 'tnZJBsdrUo88MFiB',
-        signature: 'cae67a0a883822e1087cba091321b14b73152210',
-        jsApiList: [
-            'onMenuShareTimeline',
-            'onMenuShareAppMessage'
-        ]
-    });
-    wx.ready(function () {
-        var shareData = {
-            title: '马富天博客_PHP博客_PHP Blog_PHP编程_分享PHP开发经验',	//	标题
-            desc: '马富天博客是个人独立博客专为学习php打造php教程技术,在马富天博客里可以找到你所需要的所有关于php技术解决文章方案,打造一个以技术经验为主题的分享平台!QQ:335134463',	//	描述
-            link: 'http://www.mafutian.net/',	//	分享的URL，必须和当前打开的网页的URL是一样的
-            imgUrl: 'http://www.mafutian.net/logo.jpg'	//	缩略图地址
-        };
-        wx.onMenuShareAppMessage(shareData);
-        wx.onMenuShareTimeline(shareData);
-    });
-    wx.error(function (res) {
-        //alert(res.errMsg);//错误提示
+    window.num = 0;
+    function check_count() {
+        num++;
+        if (num >= 3) {
+            location.reload();
+        }
+    }
+
+
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var result = window.location.search.substr(1).match(reg);
+        if (result != null) {
+            return decodeURIComponent(result[2]);
+        } else {
+            return null;
+        }
+    }
+    var id = getQueryString("t");
+    //console.log(id);
+    if (!id) {
+        id = 1;
+    }
+    $(function () {
+        jQuery.post("./getTocken.php", {"url": encodeURIComponent(window.location.href.split('#')[0]),"t": new Date().getTime()}, function (result) {
+            if (result.errno != 0) {
+                alert("您当前的网络不稳定请稍后再试！");
+                return;
+            }
+            var shareUrl = result.data.url;
+            wx.config({
+                debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                appId: 'xxx', // 必填，公众号的唯一标识
+                timestamp: result.data.timestamp, // 必填，生成签名的时间戳
+                nonceStr: result.data.nonceStr, // 必填，生成签名的随机串
+                signature: result.data.signature,// 必填，签名，见附录1
+                jsApiList: ['checkJsApi', 'onMenuShareAppMessage', 'onMenuShareTimeline', 'showMenuItems', 'hideAllNonBaseMenuItem']// 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+            });
+            wx.ready(function () {
+                wx.checkJsApi({
+                    jsApiList: [
+                        'onMenuShareAppMessage',
+                        'onMenuShareTimeline'
+                    ],
+                    success: function () {
+                    }
+                });
+                wx.hideAllNonBaseMenuItem();
+                wx.showMenuItems({menuList: ['menuItem:share:appMessage', 'menuItem:share:timeline']});
+                wx.onMenuShareAppMessage({
+                    title: 'AAA',
+                    link: 'www.baidu.com',
+                    imgUrl: 'sss',
+                    desc: 'sss',
+                    success: function () {
+                        check_count();
+                    }
+                });
+                wx.onMenuShareTimeline({
+                    title: 'AAA',
+                    link: 'www.baidu.com',
+                    imgUrl: 'sss',
+                    success: function () {
+                        check_count();
+                    }
+                });
+            });
+        })
     });
 </script>
 </body>
