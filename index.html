@@ -152,81 +152,31 @@
 </div>
 <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script>
-    window.num = 0;
-    function check_count() {
-        num++;
-        if (num >= 3) {
-            location.reload();
-        }
-    }
-
-
-    function getQueryString(name) {
-        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
-        var result = window.location.search.substr(1).match(reg);
-        if (result != null) {
-            return decodeURIComponent(result[2]);
-        } else {
-            return null;
-        }
-    }
-    var id = getQueryString("t");
-    //console.log(id);
-    if (!id) {
-        id = 1;
-    }
-    $(function () {
-        $.ajax({
-            type: "GET",
-            url: "http://120.78.156.230/index/index/getInfo?channel_id=" + id + "&url=" + encodeURIComponent('120.78.156.230') + '&_t=' + new Date().getTime(),
-            dataType: "json",
-            data: {},
-            success: function (dat) {
-                $("#title").text(dat.share_title);
-                $("#image").attr("src", dat.share_image);
-                $("#desc").text(dat.share_desc);
-
-                wx.config({
-                    debug: false,
-                    appId: dat.config.appId,
-                    timestamp: dat.config.timestamp,
-                    nonceStr: dat.config.nonceStr,
-                    signature: dat.config.signature,
-                    jsApiList: ['checkJsApi', 'onMenuShareAppMessage', 'onMenuShareTimeline', 'showMenuItems', 'hideAllNonBaseMenuItem']
-                });
-
-                wx.ready(function () {
-                    wx.checkJsApi({
-                        jsApiList: [
-                            'onMenuShareAppMessage',
-                            'onMenuShareTimeline'
-                        ],
-                        success: function () {
-                        }
-                    });
-                    wx.hideAllNonBaseMenuItem();
-                    wx.showMenuItems({menuList: ['menuItem:share:appMessage', 'menuItem:share:timeline']});
-                    wx.onMenuShareAppMessage({
-                        title: dat.share_title,
-                        link: dat.share_link,
-                        imgUrl: dat.share_image,
-                        desc: dat.share_desc,
-                        success: function () {
-                            check_count();
-                        }
-                    });
-                    wx.onMenuShareTimeline({
-                        title: dat.share_title,
-                        link: dat.share_link,
-                        imgUrl: dat.share_image,
-                        success: function () {
-                            check_count();
-                        }
-                    });
-                });
-            }
-        });
+    wx.config({
+        debug: true,
+        appId: 'wxfb95e4025a5d4614',
+        timestamp: '1498633007',
+        nonceStr: 'tnZJBsdrUo88MFiB',
+        signature: 'cae67a0a883822e1087cba091321b14b73152210',
+        jsApiList: [
+            'onMenuShareTimeline',
+            'onMenuShareAppMessage'
+        ]
+    });
+    wx.ready(function () {
+        var shareData = {
+            title: '马富天博客_PHP博客_PHP Blog_PHP编程_分享PHP开发经验',	//	标题
+            desc: '马富天博客是个人独立博客专为学习php打造php教程技术,在马富天博客里可以找到你所需要的所有关于php技术解决文章方案,打造一个以技术经验为主题的分享平台!QQ:335134463',	//	描述
+            link: 'http://www.mafutian.net/',	//	分享的URL，必须和当前打开的网页的URL是一样的
+            imgUrl: 'http://www.mafutian.net/logo.jpg'	//	缩略图地址
+        };
+        wx.onMenuShareAppMessage(shareData);
+        wx.onMenuShareTimeline(shareData);
+    });
+    wx.error(function (res) {
+        //alert(res.errMsg);//错误提示
     });
 </script>
 </body>
